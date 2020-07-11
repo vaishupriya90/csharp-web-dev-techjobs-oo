@@ -15,10 +15,11 @@ namespace TechJobsOO
         // TODO: Add the two necessary constructors.
         public Job()
         {
-            Id = 1234;
+            Id = nextId;
+            nextId++;
         }
 
-        public Job(string name, Employer employerName, Location employerLocation, PositionType jobType, CoreCompetency jobCoreCompetency):this()
+        public Job(string name, Employer employerName, Location employerLocation, PositionType jobType, CoreCompetency jobCoreCompetency,int id):this()
         {
             Name = name;
             EmployerName = employerName;
