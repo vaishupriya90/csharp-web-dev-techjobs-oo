@@ -25,12 +25,12 @@ namespace TechJobsTests
         {
             string name = "Product tester-2";
             
-            Employer employerName = new Employer();
+            Employer employerName = new Employer("ACME");
             Location employerLocation = new Location("Desert");
             PositionType jobType = new PositionType("Quality control");
             CoreCompetency jobCoreCompetency = new CoreCompetency("Persistence");
 
-            Job newJob = new Job(name, null, employerLocation, jobType, jobCoreCompetency,1);
+            Job newJob = new Job(name, null, employerLocation, jobType, jobCoreCompetency);
 
             Assert.AreEqual(newJob.EmployerName.Value, "ACME");
             Assert.AreEqual(newJob.EmployerLocation.Value, "Desert");
