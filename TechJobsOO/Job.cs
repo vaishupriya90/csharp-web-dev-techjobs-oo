@@ -4,8 +4,8 @@ namespace TechJobsOO
 {
     public class Job 
     {
-        public int Id { get; }
-        private static int nextId = 1;
+        public int Id { get; set; }
+        public static int nextId = 1;
 
         public string Name { get; set; }
         public Employer EmployerName { get; set; }
@@ -89,4 +89,3 @@ namespace TechJobsOO
 }
 
 
-//Job Job1 = new Job();

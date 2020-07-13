@@ -2,11 +2,34 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechJobsOO;
 using System;
 
+
+
 namespace TechJobsTests
 {
+    
     [TestClass]
+   
     public class JobTests
     {
+        Job job1;
+        Job job2;
+        Job job3;
+        Job job4;
+        [TestInitialize]
+        public void TestCreateObject()
+        {
+            job1 = new Job();
+            job2 = new Job();
+            job3 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            job4 = new Job("Product tester", new Employer(""), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        }
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            Job.nextId = 1;
+        }
+
         [TestMethod]
         public void EmptyTest()
         {
@@ -14,9 +37,7 @@ namespace TechJobsTests
         }
         [TestMethod]
         public void TestSettingJobId()
-        {
-            Job job1 = new Job();
-            Job job2 = new Job();
+        {        
 
             Assert.IsFalse(job1.Id == job2.Id);
         }
@@ -24,33 +45,20 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobConstructorSetsAllFields()
         {
-            string name = "Product tester";
-            Employer employerName = new Employer("ACME");
-            Location employerLocation = new Location("Desert");
-            PositionType jobType = new PositionType("Quality control");
-            CoreCompetency jobCoreCompetency = new CoreCompetency("Persistence");
 
-            Job newJob = new Job(name, employerName, employerLocation, jobType, jobCoreCompetency);
 
-            Assert.AreEqual(newJob.EmployerName.Value, "ACME");
-            Assert.AreEqual(newJob.EmployerLocation.Value, "Desert");
-            Assert.AreEqual(newJob.JobType.Value, "Quality control");
-            Assert.AreEqual(newJob.Name, "Product tester");
-            Assert.AreEqual(newJob.JobCoreCompetency.Value, "Persistence");
-            Assert.AreEqual(newJob.Id, 3);
+            Assert.AreEqual(job3.EmployerName.Value, "ACME");
+            Assert.AreEqual(job3.EmployerLocation.Value, "Desert");
+            Assert.AreEqual(job3.JobType.Value, "Quality control");
+            Assert.AreEqual(job3.Name, "Product tester");
+            Assert.AreEqual(job3.JobCoreCompetency.Value, "Persistence");
+            Assert.AreEqual(3,job3.Id);
         }
         [TestMethod]
         public void TestJobToStringContainsLabel()
         {
-            string name = "Product tester";
-            Employer employerName = new Employer("ACME");
-            Location employerLocation = new Location("Desert");
-            PositionType jobType = new PositionType("Quality control");
-            CoreCompetency jobCoreCompetency = new CoreCompetency("Persistence");
-
-            Job newJob1 = new Job(name, employerName, employerLocation, jobType, jobCoreCompetency);
-            string actualOutput = newJob1.ToString();
-            string expectedOutput = "\nID: 4" +
+            string actualOutput = job3.ToString();
+            string expectedOutput = "\nID: 3" +
                     "\nName: Product tester" +
                     "\nEmployer: ACME" +
                     "\nLocation: Desert" +
@@ -62,15 +70,8 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobToStringDataNotFound()
         {
-            string name = "Product tester";
-            Employer employerName = new Employer("");
-            Location employerLocation = new Location("Desert");
-            PositionType jobType = new PositionType("Quality control");
-            CoreCompetency jobCoreCompetency = new CoreCompetency("Persistence");
-
-            Job newJob2 = new Job(name, employerName, employerLocation, jobType, jobCoreCompetency);
-            string actualOutput = newJob2.ToString();
-            string expectedOutput = "\nID: 5" +
+            string actualOutput = job4.ToString();
+            string expectedOutput = "\nID: 4" +
                     "\nName: Product tester" +
                     "\nEmployer: Data not available" +
                     "\nLocation: Desert" +
@@ -82,9 +83,8 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobToStringJobNotExist()
         {
-            Job newJob3 = new Job();
             string  expectedOutput = "OOPS! This job does not seem to exist.";
-            string actualOutput = newJob3.ToString();
+            string actualOutput = job1.ToString();
             Assert.AreEqual(expectedOutput, actualOutput);
         }
     }
